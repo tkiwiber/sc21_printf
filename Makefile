@@ -58,7 +58,7 @@ OBJ_LIBFT_FILES 			:= $(LIBFT_FILES:.c=.o)
 SRC 						:= $(addprefix $(SRC_DIR), $(SRC_FILES)) $(addprefix $(LIBFT_DIR), $(LIBFT_FILES))
 
 INC 						:= -Iincludes/
-CINC 						:= includes/libftprintf.h includes/ft_global.h libft/libft.h
+CINC 						:= libft/libft.h #includes/libftprintf.h includes/ft_global.h 
 FLAGS 						:= -Wall -Werror -Wextra
 
 ifdef WITH_BONUS
@@ -66,6 +66,8 @@ OBJ 						:= $(addprefix $(OBJ_DIR), $(OBJ_FILES)) $(addprefix $(LIBFT_DIR), $(O
 else
 OBJ 						:= $(addprefix $(OBJ_DIR), $(OBJ_FILES)) $(addprefix $(LIBFT_DIR), $(OBJ_LIBFT_FILES))
 endif
+
+.PHONY: all clean fclean re libft bonus
 
 all: $(NAME)
 
@@ -85,13 +87,11 @@ $(OBJ_LIBFT_DIR)%.o: $(LIBFT_DIR)%.c libft/libft.h
 
 clean:
 	@mkdir -p $(OBJ_DIR)
-	@$(MAKE) -C libft/ clean
+	#@$(MAKE) -C libft/ clean
 	@rm -f $(OBJ_DIR)/*.o
 
 fclean: clean
-	@$(MAKE) -C libft/ fclean
+	#@$(MAKE) -C libft/ fclean
 	@rm -f $(NAME) 
 
 re: fclean all
-
-.PHONY: all clean fclean re libft
