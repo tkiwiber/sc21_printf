@@ -1,5 +1,9 @@
 .DS_Store
+.vscode
 *.o
 *.a
 *.txt
 test.c
+a.out.dSYM
+/obj
+*.out

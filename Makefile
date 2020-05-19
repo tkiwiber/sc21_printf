@@ -1,11 +1,15 @@
 NAME 					:=	libftprintf.a
 
+CC						:=	gcc
 LIBFT_DIR 				:=	libft/
 SRC_DIR 				:=	src/
 OBJ_DIR 				:=	obj/
 OBJ_LIBFT_DIR 			:=	libft/
 
-SRC_FILES				:=	ft_printf.c
+SRC_FILES				:=	ft_printf.c			\
+							ft_print_d.c		\
+							ft_print_percent.c	\
+							ft_placeholder.c	\
 
 LIBFT_FILES 			:=	ft_memset.c			\
 							ft_bzero.c			\
