@@ -7,3 +7,4 @@ test.c
 a.out.dSYM
 /obj
 *.out
+pft/

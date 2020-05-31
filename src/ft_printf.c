@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 21:23:57 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/05/19 16:47:28 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/05/20 14:31:35 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 
 int			call_print_func(va_list ap, const char *plh)
 {
-	int	i;
+	int				i;
+	t_mask			*mask;
 
 	i = 0;
+	mask = ft_mask_get(plh);
 	while (type_field[i].type != '\0')
 	{
 		if (type_field[i].type == plh[ft_strlen(plh) - 1])
-			return (type_field[i].print(ap));
+			return (type_field[i].print(ap, mask));
 		i++;
 	}
 	return (0);

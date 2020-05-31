@@ -76,8 +76,8 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 
 bonus:
 	$(MAKE) WITH_BONUS=1 all

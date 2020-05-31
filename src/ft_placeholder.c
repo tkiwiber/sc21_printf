@@ -6,17 +6,17 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 09:58:17 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/05/19 18:19:23 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/05/25 17:51:52 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		mask_get_parameter(char **plh, t_mask *mask)
+static void			mask_get_parameter(const char **plh, t_mask *mask)
 {
-	char		*tmp;
-	char		*prm_set = "$";
-	char		*prm_str;
+	const char		*tmp;
+	char			*prm_set = "$";
+	char			*prm_str;
 
 	tmp = *plh;
 	while (*tmp != '\0' && ft_strchr(prm_set, *tmp) == NULL)
@@ -34,11 +34,11 @@ static void		mask_get_parameter(char **plh, t_mask *mask)
 	*plh = tmp + sizeof(char);
 }
 
-static void		mask_get_flag(char **plh, t_mask *mask)
+static void			mask_get_flag(const char **plh, t_mask *mask)
 {
-	char		*tmp;
-	char		*flg_set = "-+ 0'#";
-	char		*flg_str;
+	const char		*tmp;
+	char			*flg_set = "-+ 0'#";
+	char			*flg_str;
 
 	tmp = *plh;
 	while (*tmp != '\0' && ft_strchr(flg_set, *tmp) != NULL)
@@ -58,11 +58,11 @@ static void		mask_get_flag(char **plh, t_mask *mask)
 	*plh = tmp;
 }
 
-static void		mask_get_width(char **plh, t_mask *mask)
+static void			mask_get_width(const char **plh, t_mask *mask)
 {
-	char		*tmp;
-	char		*prm_set = "*";
-	char		*wdt_str;
+	const char		*tmp;
+	char			*prm_set = "*";
+	char			*wdt_str;
 
 	tmp = *plh;
 	while (*tmp != '\0' && (ft_isdigit(*tmp) || ft_strchr(prm_set, *tmp) != NULL))
@@ -85,12 +85,12 @@ static void		mask_get_width(char **plh, t_mask *mask)
 	*plh = tmp;
 }
 
-static void		mask_get_precision(char **plh, t_mask *mask)
+static void			mask_get_precision(const char **plh, t_mask *mask)
 {
-	char		*tmp;
-	char		*prm_set = "*";
-	char		ch = '.';
-	char		*prc_str;
+	const char		*tmp;
+	char			*prm_set = "*";
+	char			ch = '.';
+	char			*prc_str;
 
 	if (!ft_strchr(*plh, ch))
 	{
@@ -118,11 +118,11 @@ static void		mask_get_precision(char **plh, t_mask *mask)
 	*plh = tmp;
 }
 
-static void		mask_get_length(char **plh, t_mask *mask)
+static void			mask_get_length(const char **plh, t_mask *mask)
 {
-	char		*tmp;
-	char		*lgh_set = "hlLzjt";
-	char		*lgh_str;
+	const char		*tmp;
+	char			*lgh_set = "hlLzjt";
+	char			*lgh_str;
 
 	tmp = *plh;
 	while (*tmp != '\0' && ft_strchr(lgh_set, *tmp) != NULL)
@@ -142,10 +142,10 @@ static void		mask_get_length(char **plh, t_mask *mask)
 	*plh = tmp;
 }
 
-static void		mask_get_type(char **plh, t_mask *mask)
+static void			mask_get_type(const char **plh, t_mask *mask)
 {
-	char		*tmp;
-	char		*typ_set = "diufFeEgGxXoscpaAn";
+	const char		*tmp;
+	char			*typ_set = "diufFeEgGxXoscpaAn";
 
 	tmp = *plh;
 	if (!(ft_strchr(typ_set, *tmp)))
@@ -157,13 +157,21 @@ static void		mask_get_type(char **plh, t_mask *mask)
 	(*plh)++;
 }
 
-t_mask  		*ft_mask_get(char *plh)
+t_mask				*create_mask(void)
 {
-	t_mask		*mask;
+	t_mask	*mask;
 
 	if (!(mask = (t_mask*)malloc(sizeof(t_mask))))
 		return NULL;
+	return (mask);
+}
 
+t_mask  			*ft_mask_get(const char *plh)
+{
+	t_mask			*mask;
+
+	
+	mask = create_mask();
 	mask_get_parameter(&plh, mask);
 	mask_get_flag(&plh, mask);
 	mask_get_width(&plh, mask);
