@@ -6,34 +6,11 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/17 16:58:46 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/06/01 14:50:38 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/01 21:49:14 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/*	
-**	Main algorithm for conversion argument to output string using mask.
-*/
-
-/*
-**	Here we get numner as argument and typecast for required type (as it desribed in length).
-**  Put a string as a result from itoa/ltoa (!!!new func!!!).
-*/
-
-static char			*ft_print_d_getnbr(va_list ap, t_mask *mask)
-{	
-	if (!(ft_strncmp(mask->length, "l", 1)))
-		return ft_itoa((int)va_arg(ap, long long  int));
-	else if (!(ft_strncmp(mask->length, "ll", 2)))
-		return ft_itoa((int)va_arg(ap, long long  int));
-	else if (!(ft_strncmp(mask->length, "h", 1)))
-		return ft_itoa((short int)va_arg(ap, long long  int));
-	else if (!(ft_strncmp(mask->length, "hh", 2)))
-		return ft_itoa((signed char)va_arg(ap, long long  int));
-	else
-		return ft_itoa((int)va_arg(ap, int));
-}
 
 /*
 **	Сonsistently applies logic from precision, width and flag to create output string.
@@ -73,6 +50,20 @@ static char			*ft_print_d_getnbr(va_list ap, t_mask *mask)
 **			
 */	
 
+static char			*ft_print_d_getnbr(va_list ap, t_mask *mask)
+{	
+	if (!(ft_strncmp(mask->length, "ll", 2)))
+		return ft_ltoa((long long int)va_arg(ap, long long  int));
+	else if (!(ft_strncmp(mask->length, "l", 1)))
+		return ft_ltoa((long int)va_arg(ap, long long  int));
+	else if (!(ft_strncmp(mask->length, "hh", 2)))
+		return ft_itoa((signed char)va_arg(ap, long long  int));
+	else if (!(ft_strncmp(mask->length, "h", 1)))
+		return ft_itoa((short int)va_arg(ap, long long  int));
+	else
+		return ft_itoa((int)va_arg(ap, int));
+}
+
 static void			ft_print_conversion(char *str_proto, t_mask *mask)
 {
 	mask->plh_old = (int)ft_strlen(str_proto);
@@ -91,7 +82,7 @@ static void			ft_print_conversion(char *str_proto, t_mask *mask)
 	else
 		(mask->width > mask->plh_old + mask->plh_sign) ? (mask->plh_wdth =\
 		mask->width - mask->plh_old - mask->plh_sign) : (mask->plh_wdth = 0);
-
+	
 	mask->plh_size = mask->plh_old + mask->plh_prcs + mask->plh_wdth + \
 	mask->plh_sign;
 	(ft_strchr(mask->flag, '-')) ? (mask->plh_algn = 1) : (mask->plh_algn = 0);
@@ -147,24 +138,21 @@ static char			*ft_print_d_get_strout(va_list ap, t_mask *mask)
 	
 	str_proto = ft_print_d_getnbr(ap, mask);
 	ft_print_conversion(str_proto, mask);
-	
 	if (!(str_out = (char*)malloc(sizeof(char) * (mask->plh_size + 1))))
 		return (NULL);
 	if (!(str_proto_s = (char*)malloc(sizeof(char) * (mask->plh_old + 1))))
 		return (NULL);
 	str_proto_s = ft_strtrim(str_proto, "-");
-	
 	ft_print_add_width(str_out, mask);
 	ft_print_add_sign(str_out, mask);
 	ft_print_add_precision(str_out, mask);
-	if (!((mask->precision == 0) && !ft_strncmp(str_proto, "0", ft_strlen(str_proto))))
+	//printf("[%s]",str_proto);
+	if (!(((mask->precision == -1) && ft_strncmp(str_proto, "0", ft_strlen(str_proto)) == 0)))
 		ft_print_add_word(str_out, str_proto_s, mask);
-
 	str_out[mask->plh_size] = '\0';
 	free(str_proto);
 	free(str_proto_s);
-	return (     str_out);
-	
+	return (str_out);
 }
 
 int 				ft_print_d(va_list ap, t_mask *mask)

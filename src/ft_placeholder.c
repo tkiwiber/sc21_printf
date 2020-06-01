@@ -6,17 +6,17 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 09:58:17 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/05/31 20:07:53 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/01 21:50:11 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void			mask_get_parameter(const char **plh, t_mask *mask)
+static void		mask_get_parameter(const char **plh, t_mask *mask)
 {
-	const char		*tmp;
-	char			*prm_set = "$";
-	char			*prm_str;
+	const char	*tmp;
+	char		*prm_set = "$";
+	char		*prm_str;
 
 	tmp = *plh;
 	while (*tmp != '\0' && ft_strchr(prm_set, *tmp) == NULL)
@@ -34,11 +34,11 @@ static void			mask_get_parameter(const char **plh, t_mask *mask)
 	*plh = tmp + sizeof(char);
 }
 
-static void			mask_get_flag(const char **plh, t_mask *mask)
+static void		mask_get_flag(const char **plh, t_mask *mask)
 {
-	const char		*tmp;
-	char			*flg_set = "-+ 0'#";
-	char			*flg_str;
+	const char	*tmp;
+	char		*flg_set = "-+ 0'#";
+	char		*flg_str;
 
 	tmp = *plh;
 	while (*tmp != '\0' && ft_strchr(flg_set, *tmp) != NULL)
@@ -58,39 +58,35 @@ static void			mask_get_flag(const char **plh, t_mask *mask)
 	*plh = tmp;
 }
 
-static void			mask_get_width(const char **plh, t_mask *mask)
+static void		mask_get_width(const char **plh, t_mask *mask, va_list ap)
 {
-	const char		*tmp;
-	char			*prm_set = "*";
-	char			*wdt_str;
+	const char	*tmp;
+	char		*wdt_str;
 
 	tmp = *plh;
-	while (*tmp != '\0' && (ft_isdigit(*tmp) || ft_strchr(prm_set, *tmp) != NULL))
+	while (*tmp != '\0' && (ft_isdigit(*tmp) || ft_strchr("*", *tmp) != NULL))
 		tmp++;
 	if (*tmp == '\0')
 	{
 		mask->width = 0;
 		return ;
 	}
-	/*if (!(ft_memcmp(tmp, prm_set, sizeof(char))))
-	{
-		mask->width = va_arg(ap, int);
-		return ;
-	}*/
 	if (!(wdt_str = (char*)malloc(sizeof(char) * (ft_strlen(*plh) - ft_strlen(tmp) + sizeof(char)))))
 		return ;
 	ft_strlcpy(wdt_str, *plh, ft_strlen(*plh) - ft_strlen(tmp) + sizeof(char));
-	mask->width = ft_atoi(wdt_str);
+	if (wdt_str[0] == '*') 
+		mask->width = va_arg(ap, int);
+	else
+		mask->width = ft_atoi(wdt_str);
 	free(wdt_str);
 	*plh = tmp;
 }
 
-static void			mask_get_precision(const char **plh, t_mask *mask)
+static void		mask_get_precision(const char **plh, t_mask *mask, va_list ap)
 {
-	const char		*tmp;
-	char			*prm_set = "*";
-	char			ch = '.';
-	char			*prc_str;
+	const char	*tmp;
+	char		ch = '.';
+	char		*prc_str;
 
 	if (!ft_strchr(*plh, ch))
 	{
@@ -98,31 +94,26 @@ static void			mask_get_precision(const char **plh, t_mask *mask)
 		return ;
 	}
 	tmp = ft_strchr(*plh, ch) + sizeof(char);
-	while (*tmp != '\0' && (ft_isdigit(*tmp) || ft_strchr(prm_set, *tmp) != NULL))
+	while (*tmp != '\0' && (ft_isdigit(*tmp) || ft_strchr("*", *tmp) != NULL))
 		tmp++;
-	if (*tmp == '\0')
-	{
-		mask->precision = 0;
-		return ;
-	}
-	/*if (!(ft_memcmp(tmp, prm_set, sizeof(char))))
-	{
-		mask->precision = va_arg(ap, int);
-		return ;
-	}*/
-	if (!(prc_str = (char*)malloc(sizeof(char) * (ft_strlen(*plh) - ft_strlen(tmp) + sizeof(char)))))
+	if (!(prc_str = (char*)malloc(sizeof(char) * (ft_strlen(*plh) - \
+	ft_strlen(tmp) + sizeof(char)))))
 		return ;
 	ft_strlcpy(prc_str, *plh + sizeof(char), ft_strlen(*plh) - ft_strlen(tmp));
-	mask->precision = ft_atoi(prc_str);
+	if (prc_str[0] == '*') 
+		mask->precision = va_arg(ap, int);
+	else
+	(prc_str[0] == '\0' || prc_str[0] == '0') ? (mask->precision = -1) : \
+	(mask->precision = ft_atoi(prc_str));
 	free(prc_str);
 	*plh = tmp;
 }
 
-static void			mask_get_length(const char **plh, t_mask *mask)
+static void		mask_get_length(const char **plh, t_mask *mask)
 {
-	const char		*tmp;
-	char			*lgh_set = "hlLzjt";
-	char			*lgh_str;
+	const char	*tmp;
+	char		*lgh_set = "hlLzjt";
+	char		*lgh_str;
 
 	tmp = *plh;
 	while (*tmp != '\0' && ft_strchr(lgh_set, *tmp) != NULL)
@@ -142,10 +133,10 @@ static void			mask_get_length(const char **plh, t_mask *mask)
 	*plh = tmp;
 }
 
-static void			mask_get_type(const char **plh, t_mask *mask)
+static void		mask_get_type(const char **plh, t_mask *mask)
 {
-	const char		*tmp;
-	char			*typ_set = "diufFeEgGxXoscpaAn";
+	const char	*tmp;
+	char		*typ_set = "diufFeEgGxXoscpaAn";
 
 	tmp = *plh;
 	if (!(ft_strchr(typ_set, *tmp)))
@@ -157,9 +148,9 @@ static void			mask_get_type(const char **plh, t_mask *mask)
 	(*plh)++;
 }
 
-t_mask				*create_mask(void)
+t_mask			*create_mask(void)
 {
-	t_mask	*mask;
+	t_mask		*mask;
 
 	if (!(mask = (t_mask*)malloc(sizeof(t_mask))))
 		return NULL;
@@ -168,16 +159,16 @@ t_mask				*create_mask(void)
 	return (mask);
 }
 
-t_mask  			*ft_mask_get(const char *plh)
+t_mask  		*ft_mask_get(va_list ap, const char *plh)
 {
-	t_mask			*mask;
+	t_mask		*mask;
 
 	
 	mask = create_mask();
 	mask_get_parameter(&plh, mask);
 	mask_get_flag(&plh, mask);
-	mask_get_width(&plh, mask);
-	mask_get_precision(&plh, mask);
+	mask_get_width(&plh, mask, ap);
+	mask_get_precision(&plh, mask, ap);
 	mask_get_length(&plh, mask);
 	mask_get_type(&plh, mask);
 

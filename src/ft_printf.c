@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 21:23:57 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/05/31 17:52:13 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/01 21:34:57 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			call_print_func(va_list ap, const char *plh)
 	t_mask			*mask;
 
 	i = 0;
-	mask = ft_mask_get(plh);
+	mask = ft_mask_get(ap, plh);
 	while (type_field[i].type != '\0')
 	{
 		if (type_field[i].type == plh[ft_strlen(plh) - 1])
@@ -38,7 +38,7 @@ char		*get_placeholder_str(const char *fmt)
 	char			*plh;
 	size_t			count;
 
-	if (!(plh = (char*)malloc(sizeof(char) * (10))))
+	if (!(plh = (char*)malloc(sizeof(char) * (100))))
 		return (NULL);
 	tmp = fmt;
 	count = 0;
