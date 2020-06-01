@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/17 16:58:46 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/05/31 13:43:30 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/01 14:50:38 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static void			ft_print_conversion(char *str_proto, t_mask *mask)
 	(str_proto[0] == '-') ? (mask->plh_s_ch = '-') : (mask->plh_s_ch += 0);
 	(mask->plh_s_ch == '\0') ? (mask->plh_sign = 0) : (mask->plh_sign = 1);
 	mask->plh_old -= mask->plh_sign;
-	
 	(mask->precision > mask->plh_old) ?	(mask->plh_prcs = mask->precision - \
 	mask->plh_old) : (mask->plh_prcs = 0);
 	if (mask->plh_prcs)
@@ -92,34 +91,42 @@ static void			ft_print_conversion(char *str_proto, t_mask *mask)
 	else
 		(mask->width > mask->plh_old + mask->plh_sign) ? (mask->plh_wdth =\
 		mask->width - mask->plh_old - mask->plh_sign) : (mask->plh_wdth = 0);
-	
-	//printf("[%d]", mask->plh_wdth);
+
 	mask->plh_size = mask->plh_old + mask->plh_prcs + mask->plh_wdth + \
 	mask->plh_sign;
 	(ft_strchr(mask->flag, '-')) ? (mask->plh_algn = 1) : (mask->plh_algn = 0);
-	(ft_strchr(mask->flag, '0') && !(mask->plh_algn)) ? (mask->plh_w_ch = '0')\
-	: (mask->plh_w_ch += ' ');
+	(ft_strchr(mask->flag, '0') && !(mask->plh_algn) && !(mask->precision)) ?\
+	(mask->plh_w_ch = '0') : (mask->plh_w_ch += ' ');
 }
 static void			ft_print_add_width(char *str_out, t_mask *mask)
 {
-	int				beg;
+/*	int				beg;
 
-	beg = (mask->plh_algn ? mask->plh_size - mask->plh_wdth : 0);
-	ft_memset(str_out + beg, (mask->plh_algn) ? (mask->plh_w_ch) : ' ', \
-	mask->plh_wdth);
+	if (mask->plh_wdth && mask->plh_w_ch == '0')
+		beg = mask->plh_sign;
+	else
+		beg = (mask->plh_algn ? mask->plh_size - mask->plh_wdth : 0);
+	ft_memset(str_out + beg, (mask->plh_algn) ? ' ' : (mask->plh_w_ch),	mask->plh_wdth);
+*/
+	if (mask->plh_wdth)
+		ft_memset(str_out, (mask->plh_algn) ? ' ' : (mask->plh_w_ch),	mask->width);
 }
 
 static void			ft_print_add_sign(char *str_out, t_mask *mask)
 {
 	int				beg;
 
-	beg = (mask->plh_algn ? 0 : mask->plh_wdth);
+	if (mask->plh_wdth && mask->plh_w_ch == '0')
+		beg = 0;
+	else
+		beg = (mask->plh_algn ? 0 : mask->plh_wdth);
 	ft_memset(str_out + beg, mask->plh_s_ch, mask->plh_sign);
 }
 
 static void			ft_print_add_precision(char *str_out, t_mask *mask)
 {
 	int				beg;
+	
 	beg = mask->plh_sign + (mask->plh_algn ? 0 : mask->plh_wdth);
 	ft_memset(str_out + beg, '0', mask->plh_prcs);
 }
@@ -146,15 +153,17 @@ static char			*ft_print_d_get_strout(va_list ap, t_mask *mask)
 	if (!(str_proto_s = (char*)malloc(sizeof(char) * (mask->plh_old + 1))))
 		return (NULL);
 	str_proto_s = ft_strtrim(str_proto, "-");
+	
 	ft_print_add_width(str_out, mask);
 	ft_print_add_sign(str_out, mask);
 	ft_print_add_precision(str_out, mask);
-	ft_print_add_word(str_out, str_proto_s, mask);
+	if (!((mask->precision == 0) && !ft_strncmp(str_proto, "0", ft_strlen(str_proto))))
+		ft_print_add_word(str_out, str_proto_s, mask);
+
 	str_out[mask->plh_size] = '\0';
-	
 	free(str_proto);
 	free(str_proto_s);
-	return (str_out);
+	return (     str_out);
 	
 }
 

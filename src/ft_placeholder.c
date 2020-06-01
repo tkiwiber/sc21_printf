@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 09:58:17 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/05/25 17:51:52 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/05/31 20:07:53 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ t_mask				*create_mask(void)
 
 	if (!(mask = (t_mask*)malloc(sizeof(t_mask))))
 		return NULL;
+	mask->precision = 0;
+	
 	return (mask);
 }
 
@@ -178,7 +180,7 @@ t_mask  			*ft_mask_get(const char *plh)
 	mask_get_precision(&plh, mask);
 	mask_get_length(&plh, mask);
 	mask_get_type(&plh, mask);
-	//printf(RED "%s\n" RESET, plh);
+
 
 	return (mask);
 }
