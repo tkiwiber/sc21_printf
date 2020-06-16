@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 09:58:17 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/06/01 21:50:11 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/16 13:43:14 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ static void		mask_get_width(const char **plh, t_mask *mask, va_list ap)
 	while (*tmp != '\0' && (ft_isdigit(*tmp) || ft_strchr("*", *tmp) != NULL))
 		tmp++;
 	if (*tmp == '\0')
-	{
-		mask->width = 0;
 		return ;
-	}
 	if (!(wdt_str = (char*)malloc(sizeof(char) * (ft_strlen(*plh) - ft_strlen(tmp) + sizeof(char)))))
 		return ;
 	ft_strlcpy(wdt_str, *plh, ft_strlen(*plh) - ft_strlen(tmp) + sizeof(char));
@@ -78,6 +75,11 @@ static void		mask_get_width(const char **plh, t_mask *mask, va_list ap)
 		mask->width = va_arg(ap, int);
 	else
 		mask->width = ft_atoi(wdt_str);
+	if (mask->width < 0)
+	{
+		mask->width *= -1;
+		mask->flag = ft_strjoin(mask->flag, "-");
+	}
 	free(wdt_str);
 	*plh = tmp;
 }
@@ -89,10 +91,7 @@ static void		mask_get_precision(const char **plh, t_mask *mask, va_list ap)
 	char		*prc_str;
 
 	if (!ft_strchr(*plh, ch))
-	{
-		mask->precision = 0;
 		return ;
-	}
 	tmp = ft_strchr(*plh, ch) + sizeof(char);
 	while (*tmp != '\0' && (ft_isdigit(*tmp) || ft_strchr("*", *tmp) != NULL))
 		tmp++;
@@ -102,9 +101,11 @@ static void		mask_get_precision(const char **plh, t_mask *mask, va_list ap)
 	ft_strlcpy(prc_str, *plh + sizeof(char), ft_strlen(*plh) - ft_strlen(tmp));
 	if (prc_str[0] == '*') 
 		mask->precision = va_arg(ap, int);
+	else if (prc_str[0] == '\0')
+		(mask->trunc = 1);
 	else
-	(prc_str[0] == '\0' || prc_str[0] == '0') ? (mask->precision = -1) : \
-	(mask->precision = ft_atoi(prc_str));
+		(mask->precision = ft_atoi(prc_str));
+	(mask->precision == 0) ? (mask->trunc = 1) : (mask->precision += 0);
 	free(prc_str);
 	*plh = tmp;
 }
@@ -154,8 +155,21 @@ t_mask			*create_mask(void)
 
 	if (!(mask = (t_mask*)malloc(sizeof(t_mask))))
 		return NULL;
+	mask->parameter =0;
+	mask->flag = NULL;
+	mask->length = NULL;
 	mask->precision = 0;
-	
+	mask->plh_algn = 0;
+	mask->plh_old = 0;
+	mask->plh_prcs = 0;
+	mask->plh_s_ch = 0;
+	mask->plh_sign = 0;
+	mask->plh_size = 0;
+	mask->plh_w_ch = ' ';
+	mask->plh_wdth = 0;
+	mask->type = 's';
+	mask->width = 0;
+	mask->trunc = 0;
 	return (mask);
 }
 
@@ -163,7 +177,6 @@ t_mask  		*ft_mask_get(va_list ap, const char *plh)
 {
 	t_mask		*mask;
 
-	
 	mask = create_mask();
 	mask_get_parameter(&plh, mask);
 	mask_get_flag(&plh, mask);
@@ -171,7 +184,6 @@ t_mask  		*ft_mask_get(va_list ap, const char *plh)
 	mask_get_precision(&plh, mask, ap);
 	mask_get_length(&plh, mask);
 	mask_get_type(&plh, mask);
-
 
 	return (mask);
 }

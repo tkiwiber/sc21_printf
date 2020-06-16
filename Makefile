@@ -8,7 +8,12 @@ OBJ_LIBFT_DIR 			:=	libft/
 
 SRC_FILES				:=	ft_printf.c			\
 							ft_print_d.c		\
-							ft_print_percent.c	\
+							ft_print_u.c		\
+							ft_print_x.c		\
+							ft_print_p.c		\
+							ft_print_c.c		\
+							ft_print_s.c		\
+							ft_print_pct.c	\
 							ft_placeholder.c	\
 
 LIBFT_FILES 			:=	ft_memset.c			\
@@ -40,7 +45,9 @@ LIBFT_FILES 			:=	ft_memset.c			\
 							ft_strtrim.c		\
 							ft_split.c			\
 							ft_itoa.c			\
+							ft_itoa_x.c			\
 							ft_ltoa.c			\
+							ft_ltoa_x.c			\
 							ft_strmapi.c		\
 							ft_putchar_fd.c		\
 							ft_putstr_fd.c		\
@@ -85,7 +92,7 @@ bonus:
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(CINC)
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(INC) $(FLAGS) -c $< -o $@
+	@$(CC) $(INC) $(FLAGS) -c -g $< -o $@
 
 $(OBJ_LIBFT_DIR)%.o: $(LIBFT_DIR)%.c libft/libft.h
 	@$(MAKE) -C libft/ all

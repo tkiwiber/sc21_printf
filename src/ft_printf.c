@@ -6,9 +6,10 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 21:23:57 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/06/01 21:34:57 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/16 14:12:34 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "ft_printf.h"
 #include "ft_print_func.h"
@@ -29,8 +30,6 @@ int			call_print_func(va_list ap, const char *plh)
 	return (0);
 }
 
-
-
 char		*get_placeholder_str(const char *fmt)
 {
 	const char		type_spf[] = "%diufFeEgGxXoscpaAn";
@@ -38,7 +37,7 @@ char		*get_placeholder_str(const char *fmt)
 	char			*plh;
 	size_t			count;
 
-	if (!(plh = (char*)malloc(sizeof(char) * (100))))
+	if (!(plh = (char*)malloc(sizeof(char) * (1000))))
 		return (NULL);
 	tmp = fmt;
 	count = 0;
@@ -52,7 +51,6 @@ char		*get_placeholder_str(const char *fmt)
 	if (*tmp == '\0')
 		return (NULL);
 	ft_strlcpy(plh, fmt + 1, count + 1);
-
 	return (plh);
 }
 
@@ -69,9 +67,14 @@ int 		ft_printf(const char *fmt, ...)
 		if (*fmt == '%')
 		{
 			plh = get_placeholder_str(fmt);
-			nbr += call_print_func(ap, plh);
-			fmt += ft_strlen(plh) + 1;
-			free(plh);
+			if (plh)
+			{
+				(nbr += call_print_func(ap, plh));
+				fmt += ft_strlen(plh) + 1;
+				free(plh);
+			}
+			else
+				fmt++;
 		}
 		else
 		{
@@ -81,6 +84,5 @@ int 		ft_printf(const char *fmt, ...)
 		}
 	}
 	va_end(ap);
-	
 	return (nbr);
 }

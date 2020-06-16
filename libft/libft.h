@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 09:49:16 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/06/01 20:50:23 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/15 22:03:30 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
-char				*ft_itoa(int n);
+char				*ft_itoa(long int n);
+char				*ft_itoa_x(long int n, int base, char up);
 char				*ft_ltoa(long long int n);
+char				*ft_ltoa_x(long long int n, int base, char up);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *str, int fd);

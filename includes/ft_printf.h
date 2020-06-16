@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 10:16:01 by gmorros           #+#    #+#             */
-/*   Updated: 2020/06/01 21:28:46 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/16 13:39:56 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct	s_mask
 	char		plh_w_ch;
 	int			plh_old;
 	int			plh_algn;
+	int			trunc;
 }				t_mask;
 
 typedef struct	s_type_field
@@ -56,7 +57,13 @@ typedef struct	s_type_field
 
 int				ft_printf(const char *string, ...);
 int				ft_print_d(va_list ap, t_mask *mask);
-int				ft_print_percent(va_list ap, t_mask *mask);
+int 			ft_print_u(va_list ap, t_mask *mask);
+int 			ft_print_x(va_list ap, t_mask *mask);
+int 			ft_print_p(va_list ap, t_mask *mask);
+int 			ft_print_c(va_list ap, t_mask *mask);
+int 			ft_print_s(va_list ap, t_mask *mask);
+int				ft_print_pct(va_list ap, t_mask *mask);
 t_mask  		*ft_mask_get(va_list ap, const char *plh);
+int 			ft_vsnprintf(char *str, size_t len, const char *fmt, va_list ap);
 
 #	endif

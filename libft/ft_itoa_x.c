@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_itoa_x.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 18:15:06 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/06/15 20:55:50 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/15 22:05:09 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	digit_nbr(long long int n)
+static int	digit_nbr(long long int n, int base)
 {
 	int	d_nbr;
 
@@ -23,7 +23,7 @@ static int	digit_nbr(long long int n)
 	}
 	else
 		d_nbr = 1;
-	while ((n /= 10) > 0)
+	while ((n /= base) > 0)
 	{
 		d_nbr++;
 	}
@@ -60,15 +60,16 @@ static int	check_zero(char *str, long long int num)
 	return (0);
 }
 
-char		*ft_itoa(long int n)
+char		*ft_itoa_x(long int n, int base, char up)
 {
 	int				i;
 	long int		sign;
 	char			*str;
 	long long int	num;
+    static char     digits[] = "0123456789abcdef0123456789ABCDEF";
 
 	num = (long long int)n;
-	str = (char*)malloc(sizeof(char) * (digit_nbr(num) + 1));
+	str = (char*)malloc(sizeof(char) * (digit_nbr(num, base) + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -78,8 +79,8 @@ char		*ft_itoa(long int n)
 		num = -num;
 	while (num > 0)
 	{
-		str[i] = num % 10 + '0';
-		num = num / 10;
+		str[i] = digits[num % base + base * up];
+		num = num / base;
 		i++;
 	}
 	if (sign < 0)
