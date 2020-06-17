@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 10:16:01 by gmorros           #+#    #+#             */
-/*   Updated: 2020/06/16 13:39:56 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/17 14:23:31 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct	s_mask
 	int			plh_old;
 	int			plh_algn;
 	int			trunc;
+	int			prefix;
 }				t_mask;
 
 typedef struct	s_type_field

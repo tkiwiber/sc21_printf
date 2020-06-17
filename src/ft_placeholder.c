@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 09:58:17 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/06/16 13:43:14 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/06/17 14:23:50 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ t_mask			*create_mask(void)
 	mask->type = 's';
 	mask->width = 0;
 	mask->trunc = 0;
+	mask->prefix = 0;
 	return (mask);
 }
 
