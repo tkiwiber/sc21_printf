@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 21:23:57 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/06/16 14:12:34 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/02 11:12:23 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			call_print_func(va_list ap, const char *plh)
 
 char		*get_placeholder_str(const char *fmt)
 {
-	const char		type_spf[] = "%diufFeEgGxXoscpaAn";
+	const char		type_spf[] = "%dDiIuUfFeEgGxXoOsScCpPaAnN";
 	const char		*tmp;
 	char			*plh;
 	size_t			count;

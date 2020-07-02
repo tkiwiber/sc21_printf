@@ -10,10 +10,11 @@ SRC_FILES				:=	ft_printf.c			\
 							ft_print_d.c		\
 							ft_print_u.c		\
 							ft_print_x.c		\
+							ft_print_o.c		\
 							ft_print_p.c		\
 							ft_print_c.c		\
 							ft_print_s.c		\
-							ft_print_pct.c	\
+							ft_print_pct.c		\
 							ft_placeholder.c	\
 
 LIBFT_FILES 			:=	ft_memset.c			\

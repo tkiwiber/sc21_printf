@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 10:16:01 by gmorros           #+#    #+#             */
-/*   Updated: 2020/06/17 14:23:31 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/02 11:10:22 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int				ft_printf(const char *string, ...);
 int				ft_print_d(va_list ap, t_mask *mask);
 int 			ft_print_u(va_list ap, t_mask *mask);
 int 			ft_print_x(va_list ap, t_mask *mask);
+int 			ft_print_o(va_list ap, t_mask *mask);
 int 			ft_print_p(va_list ap, t_mask *mask);
 int 			ft_print_c(va_list ap, t_mask *mask);
 int 			ft_print_s(va_list ap, t_mask *mask);
