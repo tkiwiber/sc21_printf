@@ -6,31 +6,30 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 21:23:57 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/02 11:12:23 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/02 19:28:07 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "ft_printf.h"
 #include "ft_print_func.h"
 
-int			call_print_func(va_list ap, const char *plh)
+int					call_print_func(va_list ap, const char *plh)
 {
 	int				i;
 	t_mask			*mask;
 
 	i = 0;
 	mask = ft_mask_get(ap, plh);
-	while (type_field[i].type != '\0')
+	while (g_type_field[i].type != '\0')
 	{
-		if (type_field[i].type == plh[ft_strlen(plh) - 1])
-			return (type_field[i].print(ap, mask));
+		if (g_type_field[i].type == plh[ft_strlen(plh) - 1])
+			return (g_type_field[i].print(ap, mask));
 		i++;
 	}
 	return (0);
 }
 
-char		*get_placeholder_str(const char *fmt)
+char				*get_placeholder_str(const char *fmt)
 {
 	const char		type_spf[] = "%dDiIuUfFeEgGxXoOsScCpPaAnN";
 	const char		*tmp;
@@ -54,20 +53,17 @@ char		*get_placeholder_str(const char *fmt)
 	return (plh);
 }
 
-int 		ft_printf(const char *fmt, ...)
+int					ft_printf(const char *fmt, ...)
 {
-	va_list 		ap;
+	va_list			ap;
 	char			*plh;
 	int				nbr;
 
 	nbr = 0;
 	va_start(ap, fmt);
 	while (*fmt)
-	{
 		if (*fmt == '%')
-		{
-			plh = get_placeholder_str(fmt);
-			if (plh)
+			if ((plh = get_placeholder_str(fmt)))
 			{
 				(nbr += call_print_func(ap, plh));
 				fmt += ft_strlen(plh) + 1;
@@ -75,14 +71,12 @@ int 		ft_printf(const char *fmt, ...)
 			}
 			else
 				fmt++;
-		}
 		else
 		{
 			ft_putchar_fd((char)(*fmt), 1);
 			fmt++;
 			nbr++;
 		}
-	}
 	va_end(ap);
 	return (nbr);
 }

@@ -71,7 +71,7 @@ $(NAME): $(OBJ_PART) $(HDRS)
 	@$(CC) $(SRC_PART) $(FLAGS)
 	@ar r $(NAME) $(OBJ_PART)
 	@ranlib $(NAME)
-	@echo "\033[90m[\033[32mSuccess\033[90m]\033[32m Libft.a\033[0m"
+	@echo "\033[90m[\033[32mSuccess\033[90m]\033[32m libft.a\033[0m"
 
 /%.o: /%.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
@@ -80,7 +80,7 @@ bonus: $(OBJ_BONUS) $(HDRS)
 	@$(CC) $(SRC_PART) $(SRC_BONUS) $(FLAGS)
 	@ar r $(NAME) $(OBJ_BONUS)
 	@ranlib $(NAME)
-	@echo "\033[90m[\033[32mSuccess\033[90m]\033[32m Libft.a + Bonus\033[0m"
+	@echo "\033[90m[\033[32mSuccess\033[90m]\033[32m libft.a + bonus\033[0m"
 
 clean:
 	@rm -f *.o

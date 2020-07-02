@@ -8,13 +8,16 @@ OBJ_LIBFT_DIR 			:=	libft/
 
 SRC_FILES				:=	ft_printf.c			\
 							ft_print_d.c		\
+							ft_print_d_funcs.c	\
 							ft_print_u.c		\
+							ft_print_u_funcs.c	\
 							ft_print_x.c		\
 							ft_print_o.c		\
 							ft_print_p.c		\
 							ft_print_c.c		\
 							ft_print_s.c		\
 							ft_print_pct.c		\
+							ft_mask_get_funcs.c	\
 							ft_placeholder.c	\
 
 LIBFT_FILES 			:=	ft_memset.c			\
@@ -87,6 +90,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
+	@echo "\033[90m[\033[32mSuccess\033[90m]\033[32m libftprintf.a\033[0m"
 
 bonus:
 	$(MAKE) WITH_BONUS=1 all
@@ -96,15 +100,17 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(CINC)
 	@$(CC) $(INC) $(FLAGS) -c -g $< -o $@
 
 $(OBJ_LIBFT_DIR)%.o: $(LIBFT_DIR)%.c libft/libft.h
-	@$(MAKE) -C libft/ all
+	@$(MAKE) -C libft/ bonus
 
 clean:
 	@mkdir -p $(OBJ_DIR)
-	#@$(MAKE) -C libft/ clean
+	@$(MAKE) -C libft/ clean
 	@rm -f $(OBJ_DIR)/*.o
+	@echo "\033[90m[\033[91mDeleting\033[90m]\033[31m Done\033[0m"
 
 fclean: clean
-	#@$(MAKE) -C libft/ fclean
-	@rm -f $(NAME) 
+	@$(MAKE) -C libft/ fclean
+	@rm -f $(NAME)
+	@echo "\033[90m[\033[91mRemoving\033[90m]\033[31m Done\033[0m"
 
 re: fclean all

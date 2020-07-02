@@ -6,15 +6,15 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 18:15:06 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/06/01 20:49:49 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/02 12:01:49 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	                digit_nbr(long long int n)
+static int					digit_nbr(long long int n)
 {
-	int	                    d_nbr;
+	int						d_nbr;
 
 	if (n < 0)
 	{
@@ -30,11 +30,11 @@ static int	                digit_nbr(long long int n)
 	return (d_nbr);
 }
 
-static void	                *ft_reverse(char *str)
+static void					*ft_reverse(char *str)
 {
-	int		                i;
-	int	                	j;
-	char                	c;
+	int						i;
+	int						j;
+	char					c;
 
 	i = 0;
 	j = ft_strlen(str) - 1;
@@ -49,7 +49,7 @@ static void	                *ft_reverse(char *str)
 	return (str);
 }
 
-static int	                check_zero(char *str, long long int num)
+static int					check_zero(char *str, long long int num)
 {
 	if (num == 0)
 	{
@@ -60,12 +60,12 @@ static int	                check_zero(char *str, long long int num)
 	return (0);
 }
 
-char	                	*ft_ltoa(long long int n)
+char						*ft_ltoa(long long int n)
 {
-	int		        		i;
-	long long int	sign;
-	char			        *str;
-	long long int	num;
+	int						i;
+	long long int			sign;
+	char					*str;
+	long long int			num;
 
 	num = (long long int)n;
 	str = (char*)malloc(sizeof(char) * (digit_nbr(num) + 1));

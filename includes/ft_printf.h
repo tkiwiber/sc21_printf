@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 10:16:01 by gmorros           #+#    #+#             */
-/*   Updated: 2020/07/02 11:10:22 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/02 19:06:07 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../libft/libft.h"
-
-/*
-#define RED   "\x1B[31m"
-#define GRN   "\x1B[32m"
-#define YEL   "\x1B[33m"
-#define BLU   "\x1B[34m"
-#define MAG   "\x1B[35m"
-#define CYN   "\x1B[36m"
-#define WHT   "\x1B[38m"
-#define RESET "\x1B[0m"
-*/
 
 typedef struct	s_mask
 {
@@ -57,15 +46,24 @@ typedef struct	s_type_field
 }				t_type_field;
 
 int				ft_printf(const char *string, ...);
+char			*ft_print_d_getnbr(va_list ap, t_mask *mask);
+void			ft_print_d_add_wsp(char *str_out, t_mask *mask);
 int				ft_print_d(va_list ap, t_mask *mask);
-int 			ft_print_u(va_list ap, t_mask *mask);
-int 			ft_print_x(va_list ap, t_mask *mask);
-int 			ft_print_o(va_list ap, t_mask *mask);
-int 			ft_print_p(va_list ap, t_mask *mask);
-int 			ft_print_c(va_list ap, t_mask *mask);
-int 			ft_print_s(va_list ap, t_mask *mask);
+int				ft_print_u(va_list ap, t_mask *mask);
+void			ft_print_u_add_wsp(char *str_out, t_mask *mask);
+int				ft_print_x(va_list ap, t_mask *mask);
+int				ft_print_o(va_list ap, t_mask *mask);
+int				ft_print_p(va_list ap, t_mask *mask);
+int				ft_print_c(va_list ap, t_mask *mask);
+int				ft_print_s(va_list ap, t_mask *mask);
 int				ft_print_pct(va_list ap, t_mask *mask);
-t_mask  		*ft_mask_get(va_list ap, const char *plh);
-int 			ft_vsnprintf(char *str, size_t len, const char *fmt, va_list ap);
+t_mask			*ft_mask_get(va_list ap, const char *plh);
+void			mask_get_parameter(const char **plh, t_mask *mask);
+void			mask_get_flag(const char **plh, t_mask *mask);
+void			mask_get_width(const char **plh, t_mask *mask, va_list ap);
+void			mask_get_precision(const char **plh, t_mask *mask, va_list ap);
+void			mask_get_length(const char **plh, t_mask *mask);
+int				ft_vsnprintf(char *str, size_t len, const char *fmt,\
+				va_list ap);
 
 #	endif

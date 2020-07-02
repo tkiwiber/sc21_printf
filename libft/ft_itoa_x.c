@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 18:15:06 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/06/15 22:05:09 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/02 11:59:38 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char		*ft_itoa_x(long int n, int base, char up)
 	long int		sign;
 	char			*str;
 	long long int	num;
-    static char     digits[] = "0123456789abcdef0123456789ABCDEF";
+	static char		digits[] = "0123456789abcdef0123456789ABCDEF";
 
 	num = (long long int)n;
 	str = (char*)malloc(sizeof(char) * (digit_nbr(num, base) + 1));

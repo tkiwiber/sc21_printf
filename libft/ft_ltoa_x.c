@@ -6,15 +6,15 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 18:15:06 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/06/15 22:03:18 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/02 11:57:34 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	                digit_nbr(long long int n, int base)
+static int					digit_nbr(long long int n, int base)
 {
-	int	                    d_nbr;
+	int						d_nbr;
 
 	if (n < 0)
 	{
@@ -30,11 +30,11 @@ static int	                digit_nbr(long long int n, int base)
 	return (d_nbr);
 }
 
-static void	                *ft_reverse(char *str)
+static void					*ft_reverse(char *str)
 {
-	int		                i;
-	int	                	j;
-	char                	c;
+	int						i;
+	int						j;
+	char					c;
 
 	i = 0;
 	j = ft_strlen(str) - 1;
@@ -49,7 +49,7 @@ static void	                *ft_reverse(char *str)
 	return (str);
 }
 
-static int	                check_zero(char *str, long long int num)
+static int					check_zero(char *str, long long int num)
 {
 	if (num == 0)
 	{
@@ -60,13 +60,13 @@ static int	                check_zero(char *str, long long int num)
 	return (0);
 }
 
-char	                	*ft_ltoa_x(long long int n, int base, char up)
+char						*ft_ltoa_x(long long int n, int base, char up)
 {
-	int		        		i;
-	long long int	        sign;
-	char			        *str;
-	long long int	        num;
-    static char             digits[] = "0123456789abcdef0123456789ABCDEF";
+	int						i;
+	long long int			sign;
+	char					*str;
+	static char				digits[] = "0123456789abcdef0123456789ABCDEF";
+	long long int			num;
 
 	num = (long long int)n;
 	str = (char*)malloc(sizeof(char) * (digit_nbr(num, base) + 1));
