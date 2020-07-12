@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 12:22:04 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/02 12:28:02 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/12 13:13:20 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void			mask_get_flag(const char **plh, t_mask *mask)
 	ft_strlcpy(flg_str, *plh, ft_strlen(*plh) - ft_strlen(tmp) + sizeof(char));
 	if (!(mask->flag = (char*)malloc(sizeof(char) * (ft_strlen(flg_str)\
 	+ sizeof(char)))))
+	{
+		free(mask);
 		return ;
+	}
 	ft_strlcpy(mask->flag, flg_str, ft_strlen(flg_str) + sizeof(char));
 	free(flg_str);
 	*plh = tmp;
@@ -135,7 +138,10 @@ void			mask_get_length(const char **plh, t_mask *mask)
 	ft_strlcpy(lgh_str, *plh, ft_strlen(*plh) - ft_strlen(tmp) + sizeof(char));
 	if (!(mask->length = (char*)malloc(sizeof(char) * (ft_strlen(lgh_str)\
 	+ sizeof(char)))))
+	{
+		free(mask);
 		return ;
+	}
 	ft_strlcpy(mask->length, lgh_str, ft_strlen(lgh_str) + sizeof(char));
 	free(lgh_str);
 	*plh = tmp;
