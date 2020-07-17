@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 10:16:01 by gmorros           #+#    #+#             */
-/*   Updated: 2020/07/02 19:06:07 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/17 11:51:01 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int				ft_print_p(va_list ap, t_mask *mask);
 int				ft_print_c(va_list ap, t_mask *mask);
 int				ft_print_s(va_list ap, t_mask *mask);
 int				ft_print_pct(va_list ap, t_mask *mask);
+void			delete_mask(t_mask *mask);
 t_mask			*ft_mask_get(va_list ap, const char *plh);
 void			mask_get_parameter(const char **plh, t_mask *mask);
 void			mask_get_flag(const char **plh, t_mask *mask);

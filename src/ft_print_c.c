@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 13:32:57 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/12 13:16:40 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/14 15:46:21 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,5 @@ int						ft_print_c(va_list ap, t_mask *mask)
 	else
 		ft_print_c_get_strout(ap, mask);
 	len = mask->plh_size;
-	free(mask->length);
-	free(mask->flag);
-	free(mask);
 	return (len);
 }

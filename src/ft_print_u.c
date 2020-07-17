@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/17 16:58:46 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/12 13:17:15 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/14 15:52:35 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ static char			*ft_print_u_get_strout(va_list ap, t_mask *mask)
 	ft_print_conversion(str_proto, mask);
 	if (!(str_out = (char*)malloc(sizeof(char) * (mask->plh_size + 1))))
 		return (NULL);
-	if (!(str_proto_s = (char*)malloc(sizeof(char) * (mask->plh_old + 1))))
-		return (NULL);
 	str_proto_s = ft_strtrim(str_proto, "-");
 	ft_print_u_add_wsp(str_out, mask);
 	if (!(((mask->trunc == 1) && ft_strncmp(str_proto, "0",\
@@ -97,8 +95,5 @@ int					ft_print_u(va_list ap, t_mask *mask)
 	len = ft_strlen(str_to_out);
 	ft_putstr_fd(str_to_out, 1);
 	free(str_to_out);
-	free(mask->length);
-	free(mask->flag);
-	free(mask);
 	return (len);
 }

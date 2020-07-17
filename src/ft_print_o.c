@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/17 16:58:46 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/12 13:16:53 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/14 15:51:58 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,5 @@ int					ft_print_o(va_list ap, t_mask *mask)
 	len = ft_strlen(str_to_out);
 	ft_putstr_fd(str_to_out, 1);
 	free(str_to_out);
-	free(mask->length);
-	free(mask->flag);
-	free(mask);
 	return (len);
 }

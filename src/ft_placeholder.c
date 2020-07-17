@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 09:58:17 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/02 12:25:27 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/17 11:53:25 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,25 @@ t_mask				*create_mask(void)
 
 	if (!(mask = (t_mask*)malloc(sizeof(t_mask))))
 		return (NULL);
-	mask->parameter = 0;
-	mask->flag = NULL;
-	mask->length = NULL;
-	mask->precision = 0;
-	mask->plh_algn = 0;
-	mask->plh_old = 0;
-	mask->plh_prcs = 0;
-	mask->plh_s_ch = 0;
-	mask->plh_sign = 0;
-	mask->plh_size = 0;
+	ft_memset(mask, 0, sizeof(t_mask));
 	mask->plh_w_ch = ' ';
-	mask->plh_wdth = 0;
 	mask->type = 's';
-	mask->width = 0;
-	mask->trunc = 0;
-	mask->prefix = 0;
 	return (mask);
+}
+
+void				delete_mask(t_mask *mask)
+{
+	free(mask->flag);
+	free(mask->length);
+	free(mask);
 }
 
 t_mask				*ft_mask_get(va_list ap, const char *plh)
 {
 	t_mask			*mask;
 
-	mask = create_mask();
+	if (!(mask = create_mask()))
+		return (NULL);
 	mask_get_parameter(&plh, mask);
 	mask_get_flag(&plh, mask);
 	mask_get_width(&plh, mask, ap);

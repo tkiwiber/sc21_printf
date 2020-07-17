@@ -6,13 +6,13 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 12:22:04 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/12 13:13:20 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/17 12:13:55 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			mask_get_parameter(const char **plh, t_mask *mask)
+void				mask_get_parameter(const char **plh, t_mask *mask)
 {
 	const char		*tmp;
 	static char		prm_set[] = "$";
@@ -35,7 +35,7 @@ void			mask_get_parameter(const char **plh, t_mask *mask)
 	*plh = tmp + sizeof(char);
 }
 
-void			mask_get_flag(const char **plh, t_mask *mask)
+void				mask_get_flag(const char **plh, t_mask *mask)
 {
 	const char		*tmp;
 	static char		flg_set[] = "-+ 0'#";
@@ -55,19 +55,17 @@ void			mask_get_flag(const char **plh, t_mask *mask)
 	ft_strlcpy(flg_str, *plh, ft_strlen(*plh) - ft_strlen(tmp) + sizeof(char));
 	if (!(mask->flag = (char*)malloc(sizeof(char) * (ft_strlen(flg_str)\
 	+ sizeof(char)))))
-	{
-		free(mask);
 		return ;
-	}
 	ft_strlcpy(mask->flag, flg_str, ft_strlen(flg_str) + sizeof(char));
 	free(flg_str);
 	*plh = tmp;
 }
 
-void			mask_get_width(const char **plh, t_mask *mask, va_list ap)
+void				mask_get_width(const char **plh, t_mask *mask, va_list ap)
 {
 	const char		*tmp;
 	char			*wdt_str;
+	char			*str_to_free;
 
 	tmp = *plh;
 	while (*tmp != '\0' && (ft_isdigit(*tmp) || ft_strchr("*", *tmp) != NULL))
@@ -78,20 +76,20 @@ void			mask_get_width(const char **plh, t_mask *mask, va_list ap)
 	ft_strlen(tmp) + sizeof(char)))))
 		return ;
 	ft_strlcpy(wdt_str, *plh, ft_strlen(*plh) - ft_strlen(tmp) + sizeof(char));
-	if (wdt_str[0] == '*')
-		mask->width = va_arg(ap, int);
-	else
-		mask->width = ft_atoi(wdt_str);
+	(wdt_str[0] == '*') ? (mask->width = va_arg(ap, int)) : \
+	(mask->width = ft_atoi(wdt_str));
 	if (mask->width < 0)
 	{
 		mask->width *= -1;
+		str_to_free = mask->flag;
 		mask->flag = ft_strjoin(mask->flag, "-");
+		free(str_to_free);
 	}
 	free(wdt_str);
 	*plh = tmp;
 }
 
-void			mask_get_precision(const char **plh, \
+void				mask_get_precision(const char **plh, \
 t_mask *mask, va_list ap)
 {
 	const char		*tmp;
@@ -118,7 +116,7 @@ t_mask *mask, va_list ap)
 	*plh = tmp;
 }
 
-void			mask_get_length(const char **plh, t_mask *mask)
+void				mask_get_length(const char **plh, t_mask *mask)
 {
 	const char		*tmp;
 	static char		*lgh_set = "hlLzjt";
@@ -138,10 +136,7 @@ void			mask_get_length(const char **plh, t_mask *mask)
 	ft_strlcpy(lgh_str, *plh, ft_strlen(*plh) - ft_strlen(tmp) + sizeof(char));
 	if (!(mask->length = (char*)malloc(sizeof(char) * (ft_strlen(lgh_str)\
 	+ sizeof(char)))))
-	{
-		free(mask);
 		return ;
-	}
 	ft_strlcpy(mask->length, lgh_str, ft_strlen(lgh_str) + sizeof(char));
 	free(lgh_str);
 	*plh = tmp;

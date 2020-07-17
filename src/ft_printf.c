@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 21:23:57 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/12 13:17:35 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/17 11:34:01 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,24 @@
 int					call_print_func(va_list ap, const char *plh)
 {
 	int				i;
+	int				n;
 	t_mask			*mask;
 
 	i = 0;
-	mask = ft_mask_get(ap, plh);
+	n = 0;
+	if (!(mask = ft_mask_get(ap, plh)))
+		return (0);
 	while (g_type_field[i].type != '\0')
 	{
 		if (g_type_field[i].type == plh[ft_strlen(plh) - 1])
-			return (g_type_field[i].print(ap, mask));
+		{
+			n = g_type_field[i].print(ap, mask);
+			delete_mask(mask);
+			return (n);
+		}
 		i++;
 	}
+	delete_mask(mask);
 	return (0);
 }
 
@@ -36,8 +44,6 @@ char				*get_placeholder_str(const char *fmt)
 	char			*plh;
 	size_t			count;
 
-	if (!(plh = (char*)malloc(sizeof(char) * (1000))))
-		return (NULL);
 	tmp = fmt;
 	count = 0;
 	while (*tmp)
@@ -48,6 +54,8 @@ char				*get_placeholder_str(const char *fmt)
 			break ;
 	}
 	if (*tmp == '\0')
+		return (NULL);
+	if (!(plh = (char*)malloc(sizeof(char) * (1000))))
 		return (NULL);
 	ft_strlcpy(plh, fmt + 1, count + 1);
 	return (plh);

@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 18:15:06 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/02 11:57:34 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/14 13:32:25 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char						*ft_ltoa_x(long long int n, int base, char up)
 	static char				digits[] = "0123456789abcdef0123456789ABCDEF";
 	long long int			num;
 
-	num = (long long int)n;
+	num = (unsigned long long int)n;
 	str = (char*)malloc(sizeof(char) * (digit_nbr(num, base) + 1));
 	if (!str)
 		return (NULL);

@@ -74,8 +74,8 @@ OBJ_LIBFT_FILES 			:= $(LIBFT_FILES:.c=.o)
 SRC 						:= $(addprefix $(SRC_DIR), $(SRC_FILES)) $(addprefix $(LIBFT_DIR), $(LIBFT_FILES))
 
 INC 						:= -Iincludes/
-CINC 						:= libft/libft.h #includes/libftprintf.h includes/ft_global.h 
-FLAGS 						:= -Wall -Werror -Wextra
+CINC 						:= libft/libft.h
+FLAGS 						:= -g -Wall -Werror -Wextra
 
 ifdef WITH_BONUS
 OBJ 						:= $(addprefix $(OBJ_DIR), $(OBJ_FILES)) $(addprefix $(LIBFT_DIR), $(OBJ_LIBFT_FILES))
