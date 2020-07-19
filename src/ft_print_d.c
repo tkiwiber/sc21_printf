@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/17 16:58:46 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/14 15:51:50 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/19 10:54:39 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void			ft_print_conversion2(t_mask *mask)
 		(mask->plh_algn = 1);
 	else
 		(mask->plh_algn = 0);
-	if (ft_strchr(mask->flag, '0') && !(mask->plh_algn) && !(mask->precision))
+	if (ft_strchr(mask->flag, '0') && (!(mask->plh_algn) && !(mask->trunc)\
+	&& !(mask->precision)))
 		(mask->plh_w_ch = '0');
 	else
 		(mask->plh_w_ch = ' ');

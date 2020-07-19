@@ -6,7 +6,7 @@
 /*   By: tkiwiber <alex_orlov@goodiez.app>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/17 16:58:46 by tkiwiber          #+#    #+#             */
-/*   Updated: 2020/07/14 15:46:01 by tkiwiber         ###   ########.fr       */
+/*   Updated: 2020/07/19 12:44:47 by tkiwiber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ static void			ft_print_conversion(char *str_proto, t_mask *mask)
 		mask->plh_size = mask->width;
 	(ft_strchr(mask->flag, '-')) ? (mask->plh_algn = 1) :\
 	(mask->plh_algn = 0);
-	(ft_strchr(mask->flag, '0') && !(mask->plh_algn) && !(mask->precision)) ?\
-	(mask->plh_w_ch = '0') :\
-	(mask->plh_w_ch = ' ');
+	(ft_strchr(mask->flag, '0') && !(mask->plh_algn)) ? (mask->plh_w_ch = '0')\
+	: (mask->plh_w_ch = ' ');
 }
 
 static char			*ft_print_s_get_strout(va_list ap, t_mask *mask)

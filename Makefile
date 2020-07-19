@@ -100,7 +100,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(CINC)
 	@$(CC) $(INC) $(FLAGS) -c -g $< -o $@
 
 $(OBJ_LIBFT_DIR)%.o: $(LIBFT_DIR)%.c libft/libft.h
-	@$(MAKE) -C libft/ bonus
+	@$(MAKE) -C libft/ all #bonus
 
 clean:
 	@mkdir -p $(OBJ_DIR)
